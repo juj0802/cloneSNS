@@ -1,5 +1,6 @@
 package com.cos.photogramstart.config.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -27,8 +28,15 @@ public class PrincipalDetails implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<GrantedAuthority> collector = new ArrayList();
+		collector.add(new GrantedAuthority() {
+			
+			@Override
+			public String getAuthority() {
+				return user.getRole();
+			}
+		});
+		return collector;
 	}
 
 	@Override
