@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomException;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,5 +38,22 @@ public class UserService {
 		userEntity.setGender(user.getGender());
 		return userEntity;
 	
+	}
+	@Transactional(readOnly = true) //조금 더 빠른 jpa연산을 위해서 읽기전용으로설정
+	public UserProfileDto userProfile(int pageUserid,int principalId) {
+		// SELECT * FROM image WHERE userId = :userId;
+		UserProfileDto dto = new UserProfileDto();
+		
+		User userEntity = userRepository.findById(pageUserid).orElseThrow(()-> {
+			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
+		});
+		//userEntity.getImages().get(0);
+		dto.setUser(userEntity);
+		dto.setPageOwnerState(pageUserid == principalId); 
+		dto.setImageCount(userEntity.getImages().size());
+		
+		
+		
+		return dto;
 	}
 }

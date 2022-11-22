@@ -18,21 +18,23 @@
                 <!--사진업로드 로고 end-->
                 
                 <!--사진업로드 Form-->
-                <form class="upload-form" >
-                    <input  type="file" name="file"  onchange="imageChoose(this)"/>
+                <form class="upload-form" action="/image" method="post" enctype="multipart/form-data">
+              
                     <div class="upload-img">
                         <img src="/images/person.jpeg" alt="" id="imageUploadPreview" />
                     </div>
                     
                     <!--사진설명 + 업로드버튼-->
                     <div class="upload-form-detail">
-                   		 <input type="text" placeholder="사진설명" name="caption">
+                        <input type="file" name="file" onchange="imageChoose(this)" />
+
+                        <input type="text" placeholder="사진설명" name="caption" required="required" \/>
                         <button class="cta blue">업로드</button>
                     </div>
                     <!--사진설명end-->
                     
                 </form>
-                <!--사진업로드 Form-->
+                <!--사진업로드 Form end-->
             </section>
             <!--사진업로드 박스 end-->
         </main>
